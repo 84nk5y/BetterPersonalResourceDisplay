@@ -71,3 +71,17 @@ f:SetScript("OnEvent", function(self, event, ...)
         C_Timer.After(0.1, ApplyFading)
     end
 end)
+
+-- workaround for Blizzard PRD bug
+local bugFix = CreateFrame("Frame")
+bugFix:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+bugFix:SetScript("OnEvent", function(self, event)
+    if event == "UPDATE_SHAPESHIFT_FORM" then
+        if PersonalResourceDisplayFrame.AlternatePowerBar and GetShapeshiftFormID() == 1 then
+            PersonalResourceDisplayFrame:UpdateAdditionalBarAnchors()
+            PersonalResourceDisplayFrame.AlternatePowerBar:Show();
+        else
+            PersonalResourceDisplayFrame.AlternatePowerBar:Hide();
+        end
+    end
+end)
