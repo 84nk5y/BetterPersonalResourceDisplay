@@ -26,6 +26,19 @@ local function StyleAbsorbs(bar)
     end
 end
 
+local function StyleHeals(bar)
+    local bars = {
+        bar.myHealPrediction,
+        bar.otherHealPrediction
+    }
+
+    for _, bar in ipairs(bars) do
+        if bar then
+            bar:SetAtlas("UI-HUD-UnitFrame-Player-PortraitOn-Bar-Health-Status")
+        end
+    end
+end
+
 hooksecurefunc(PersonalResourceDisplayFrame, "SetupAlternatePowerBar", function(self)
     local prdHealthBar = self.HealthBarsContainer.healthBar
     local prdPowerBar = self.PowerBar
@@ -34,6 +47,7 @@ hooksecurefunc(PersonalResourceDisplayFrame, "SetupAlternatePowerBar", function(
     StyleBar(prdPowerBar, prdPowerBar.Border)
 
     StyleAbsorbs(prdHealthBar)
+    StyleHeals(prdHealthBar)
 
     local _, englishClass = UnitClass("player")
     local classColor = RAID_CLASS_COLORS[englishClass]
